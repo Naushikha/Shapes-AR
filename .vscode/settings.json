@@ -1,0 +1,8 @@
+{
+"liveServer.settings.https": {
+"enable": true, //set it true to enable the feature.
+"cert": "/home/naush/Documents/CODE/TinyCA/Sites/192.168.1.5/192.168.1.5.crt", //full path of the certificate
+"key": "/home/naush/Documents/CODE/TinyCA/Sites/192.168.1.5/192.168.1.5.key", //full path of the private key
+"passphrase": "1234"
+}
+}
