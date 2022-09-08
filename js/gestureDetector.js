@@ -1,16 +1,15 @@
+// https://github.com/fcor/arjs-gestures
 // Component that detects and emits events for touch gestures
-
-AFRAME.registerComponent("gesture-detector", {
-  schema: {
-    element: { default: "" },
-  },
-
-  init: function () {
+class gestureDetector {
+  data = {
+    element: "",
+  };
+  constructor() {
     this.targetElement =
       this.data.element && document.querySelector(this.data.element);
 
     if (!this.targetElement) {
-      this.targetElement = this.el;
+      this.targetElement = document;
     }
 
     this.internalState = {
@@ -24,19 +23,18 @@ AFRAME.registerComponent("gesture-detector", {
     this.targetElement.addEventListener("touchend", this.emitGestureEvent);
 
     this.targetElement.addEventListener("touchmove", this.emitGestureEvent);
-  },
+  }
 
-  remove: function () {
+  remove() {
     this.targetElement.removeEventListener("touchstart", this.emitGestureEvent);
 
     this.targetElement.removeEventListener("touchend", this.emitGestureEvent);
 
     this.targetElement.removeEventListener("touchmove", this.emitGestureEvent);
-  },
+  }
 
   emitGestureEvent(event) {
     const currentState = this.getTouchState(event);
-
     const previousState = this.internalState.previousState;
 
     const gestureContinues =
@@ -52,7 +50,7 @@ AFRAME.registerComponent("gesture-detector", {
       const eventName =
         this.getEventPrefix(previousState.touchCount) + "fingerend";
 
-      this.el.emit(eventName, previousState);
+      this.emit(eventName, previousState);
 
       this.internalState.previousState = null;
     }
@@ -67,7 +65,7 @@ AFRAME.registerComponent("gesture-detector", {
       const eventName =
         this.getEventPrefix(currentState.touchCount) + "fingerstart";
 
-      this.el.emit(eventName, currentState);
+      this.emit(eventName, currentState);
 
       this.internalState.previousState = currentState;
     }
@@ -96,11 +94,11 @@ AFRAME.registerComponent("gesture-detector", {
       const eventName =
         this.getEventPrefix(currentState.touchCount) + "fingermove";
 
-      this.el.emit(eventName, eventDetail);
+      this.emit(eventName, eventDetail);
     }
-  },
+  }
 
-  getTouchState: function (event) {
+  getTouchState(event) {
     if (event.touches.length === 0) {
       return null;
     }
@@ -156,11 +154,18 @@ AFRAME.registerComponent("gesture-detector", {
     }
 
     return touchState;
-  },
+  }
 
   getEventPrefix(touchCount) {
     const numberNames = ["one", "two", "three", "many"];
 
     return numberNames[Math.min(touchCount, 4) - 1];
-  },
-});
+  }
+
+  // https://aframe.io/docs/1.3.0/introduction/javascript-events-dom-apis.html
+  emit(eventName, detail) {
+    // https://stackoverflow.com/a/9418326
+    var myEvent = new CustomEvent(eventName, { detail: detail });
+    document.dispatchEvent(myEvent);
+  }
+}
