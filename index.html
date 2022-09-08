@@ -1,28 +1,41 @@
 <!DOCTYPE html>
-<meta
-  name="viewport"
-  content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-/>
+<head>
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+  />
+  <title>Shapes - AR</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+</head>
 <script src="js/lib/three.min.js"></script>
 <script src="js/lib/stats.min.js"></script>
 <script src="js/lib/ar-threex.js"></script>
 <script src="js/gestureDetector.js"></script>
 <script src="js/gestureHandler.js"></script>
 
-<body style="margin: 0px; overflow: hidden">
-  <div
-    style="
-      width: 100%;
-      text-align: center;
-      position: fixed;
-      bottom: 0;
-      z-index: 1;
-    "
-  >
+<body>
+  <div id="loading-screen">
+    <img src="data/logo.png" />
+    <h1>
+      Shapes <sup>AR</sup> <br />
+      <br />
+      is <br />
+      <br />
+      loading...
+    </h1>
+  </div>
+  <div id="header">
+    <button id="btn-about" onclick="showAbout()">?</button>
+    <img id="img-header" src="data/logo.png" />
+    <h1>Shapes <sup>AR</sup></h1>
+  </div>
+  <div id="UI">
     <button onclick="changeShape()">New Shape!</button>
     <button onclick="changeColor()">Change Color!</button>
     <br />
-    <a href="data/hiro.png">Get marker</a>
+    <br />
+    <a href="data/hiro.png" target="_blank" id="markerLink">Get marker</a>
   </div>
   <script>
     //////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +85,9 @@
 
     arToolkitSource.init(function onReady() {
       initARContext();
+      setTimeout(() => {
+        document.getElementById("loading-screen").remove();
+      }, 5000);
       setTimeout(() => {
         onResize();
       }, 2000);
@@ -243,7 +259,7 @@
     //		render the whole thing on the page
     //////////////////////////////////////////////////////////////////////////////////
     var stats = new Stats();
-    document.body.appendChild(stats.dom);
+    // document.body.appendChild(stats.dom);
     // render the scene
     onRenderFcts.push(function () {
       renderer.render(scene, camera);
@@ -277,6 +293,12 @@
     }
     function changeColor() {
       shape.material = getRandomMaterial();
+    }
+
+    function showAbout() {
+      alert(
+        "Shapes-AR by Naushikha Jayawickrama\nDesigned for Computer Graphics II Course @ UCSC."
+      );
     }
   </script>
 </body>
