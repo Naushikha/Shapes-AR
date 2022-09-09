@@ -16,7 +16,7 @@
 
 <body>
   <div id="loading-screen">
-    <img src="data/logo.png" />
+    <img id="loading-logo" src="data/logo.png" />
     <h1>
       Shapes <sup>AR</sup> <br />
       <br />
@@ -24,6 +24,25 @@
       <br />
       loading...
     </h1>
+    <img class="animated-gestures" src="data/camera.gif" />
+    <div id="camera">Allow camera permissions</div>
+    <br />
+    <img id="scan" class="animated-gestures" src="data/scan.gif" /> Scan marker
+    using phone
+    <br />
+    <img
+      id="gesture-move"
+      class="animated-gestures"
+      src="data/moveGesture.gif"
+    />
+    Rotate shapes using fingers
+    <br />
+    <img
+      id="gesture-pinch"
+      class="animated-gestures"
+      src="data/pinchGesture.gif"
+    />
+    Make them bigger by pinching<br />
   </div>
   <div id="header">
     <button id="btn-about" onclick="showAbout()">?</button>

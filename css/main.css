@@ -81,12 +81,29 @@ canvas {
   color: #522719;
 }
 
-#loading-screen > img {
+#loading-logo {
   display: block;
   margin-top: 15vh;
   margin-left: auto;
   margin-right: auto;
   width: 60%;
+}
+
+.animated-gestures {
+  margin-left: 20px;
+  height: 32px;
+  width: 32px;
+}
+
+#gesture-move {
+  margin-left: 12px;
+  height: 40px;
+  width: 40px;
+}
+
+#camera {
+  display: inline-block;
+  color: #870b16;
 }
 
 /* https://stackoverflow.com/a/54702294 */
