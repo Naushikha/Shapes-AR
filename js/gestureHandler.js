@@ -17,24 +17,24 @@ class gestureHandler {
 
     this.isVisible = false;
     this.initialScale = this.shape.scale;
+
+    // https://github.com/AR-js-org/AR.js/pull/225
+    window.addEventListener("markerFound", () => {
+      this.isVisible = true;
+    });
+    window.addEventListener("markerLost", () => {
+      this.isVisible = false;
+    });
+    document.addEventListener("onefingermove", this.handleRotation);
+    document.addEventListener("twofingermove", this.handleScale);
   }
 
-  update(shape, visibility) {
-    this.shape = shape;
-    this.isVisible = visibility;
-
-    if (this.isVisible) {
-      document.addEventListener("onefingermove", this.handleRotation);
-      document.addEventListener("twofingermove", this.handleScale);
-    } else {
-      document.removeEventListener("onefingermove", this.handleRotation);
-      document.removeEventListener("twofingermove", this.handleScale);
+  update(shape) {
+    // Check if shape has changed
+    if (this.shape.uuid != shape.uuid) {
+      this.data.scaleFactor = 1; // Reset scaleFactor
+      this.shape = shape;
     }
-  }
-
-  remove() {
-    document.removeEventListener("onefingermove", this.handleRotation);
-    document.removeEventListener("twofingermove", this.handleScale);
   }
 
   handleRotation(event) {
