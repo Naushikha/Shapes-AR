@@ -258,9 +258,20 @@
       },
     ];
 
+    var currentShapeIndex = 4;
+
+    function getRandomShapeIndex() {
+      return Math.floor(Math.random() * shapeArray.length);
+    }
+
     function setNewShape() {
-      var geometry =
-        shapeArray[Math.floor(Math.random() * shapeArray.length)]();
+      var newShapeIndex = getRandomShapeIndex();
+      // Make sure we do not get the same shape with a different color
+      while (currentShapeIndex == newShapeIndex) {
+        newShapeIndex = getRandomShapeIndex();
+      }
+      currentShapeIndex = newShapeIndex;
+      var geometry = shapeArray[currentShapeIndex]();
       var material = getRandomMaterial();
 
       var shape = new THREE.Mesh(geometry, material);
@@ -269,7 +280,7 @@
       return shape;
     }
 
-    shape = setNewShape();
+    var shape = setNewShape();
 
     // Setup gestures
     const gDetector = new gestureDetector();
